@@ -13,14 +13,11 @@ app.use('/pdf', express.static('bak'));
 
 app.engine('html', function(filePath, options, callback) { // define the template engine
   fs.readFile(filePath, function(err, content) {
-    console.log("run");
     if (err) return callback(new Error(err));
     var rendered = content.toString();
-    console.log(options.replace);
     for (var i in options.replace) {
       rendered = rendered.replace(new RegExp('#' + i + '#', 'g'), options.replace[i]);
     }
-    // console.log(rendered);
     return callback(null, rendered);
   });
 });
