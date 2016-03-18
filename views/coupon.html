@@ -1,0 +1,112 @@
+<!Doctype html>
+<html>
+
+<head>
+  <title>#title#</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background: #ed1c24;
+      color: #fff;
+      font-size: 36px;
+      line-height: 50px;
+      text-align: center;
+    }
+
+    .content {
+      display: table-row;
+    }
+
+    .content>div {
+      width: 50%;
+      display: table-cell;
+      vertical-align: middle;
+      padding: 10px;
+    }
+
+    .content>div.img {
+      padding: 0;
+      vertical-align: top;
+    }
+
+    .content img {
+      width: 100%;
+    }
+
+    .message2 {
+      color: #999999;
+    }
+
+    a {
+      font-size: 20px;
+      background: #ed1c24;
+      color: #fff;
+      margin: 20px auto;
+      width: 200px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 5px;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    hr {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border-right-width: 0px;
+      border-bottom-width: 0px;
+      border-left-width: 0px;
+      border-top: 1px solid #eeeeee;
+    }
+
+    .printCoupon {
+      display: none;
+    }
+
+    .footer {
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+    }
+  </style>
+  <script src="/static/js/jquery-2.2.1.min.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    #title#
+  </div>
+  <div class="content">
+    <div class="img">
+      <img src="#imageUrl#" />
+    </div>
+    <div>
+      <div>
+        #message#
+      </div>
+      <hr />
+      <div class="message2">
+        #message2#
+      </div>
+    </div>
+  </div>
+  <div class="footer" style="">
+    <div>
+      Code: #code#
+    </div>
+    <div>
+      Redeem by: #expiry#
+    </div>
+    <div class="#mode#">
+      <a href="#url#" target="_blank">PRINT COUPON</a>
+    </div>
+  </div>
+</body>
+
+</html>
