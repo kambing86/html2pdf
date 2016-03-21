@@ -4,12 +4,12 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const xz = require('xz');
+// const xz = require('xz');
 const moment = require('moment');
 
 const app = express();
 
-app.use('/static', express.static('static'));
+// app.use('/static', express.static('static'));
 app.use('/pdf', express.static('bak'));
 
 app.engine('html', (filePath, options, callback) => { // define the template engine
@@ -31,8 +31,6 @@ const paperFormat = {
 };
 const backupPath = __dirname + '/bak';
 
-
-
 (function() {
   if (!fs.existsSync(backupPath))
     fs.mkdirSync(backupPath);
@@ -43,7 +41,6 @@ const backupPath = __dirname + '/bak';
   if (!fs.existsSync(path))
     fs.mkdirSync(path);
 })();
-
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
