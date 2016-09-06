@@ -67,10 +67,10 @@ app.post('/getCoupon', (req, res, next) => {
   var obj = {
     title: coupon.deal.name,
     imageUrl: coupon.deal.largeImage,
-    message: coupon.deal.desc,
+    message: coupon.deal.desc.replace(/\n/g, "<br/>"),
     valStart: moment(coupon.deal.valStart).add(8,'hours').format("DD-MMM-YYYY"),
     valEnd: moment(coupon.deal.valEnd).add(8,'hours').format("DD-MMM-YYYY"),
-    message2: coupon.deal.termCond,
+    message2: coupon.deal.termCond.replace(/\n/g, "<br/>"),
     mode: 'printCoupon',
     code: coupon.code,
     expiry: moment(coupon.expiry).format("YYYY-MM-DD HH:mm")
