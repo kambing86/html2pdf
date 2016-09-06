@@ -19,15 +19,19 @@
     }
 
     .content {
-      display: table-row;
+      padding: 10px;
+      width: 100%;
+      /* text-align: center; */
     }
 
+    /*
     .content>div {
       width: 50%;
       display: table-cell;
       vertical-align: middle;
       padding: 10px;
     }
+    */
 
     .content>div.img {
       padding: 0;
@@ -41,7 +45,9 @@
     .message2 {
       color: #999999;
     }
-
+    .tnc {
+      text-align: left;
+    }
     a {
       font-size: 20px;
       background: #ed1c24;
@@ -86,25 +92,34 @@
     <div class="img">
       <img src="#imageUrl#" />
     </div>
+  </div>
+  <div class="content">
     <div>
       <div>
         #message#
       </div>
       <hr />
-      <div class="message2">
-        #message2#
-      </div>
+      <div class="tnc">
+		  Terms &amp; Conditions
+		  <div class="message2">
+			Promotion valid from #valStart# to #valEnd#
+			<br>
+			#message2#
+		  </div>
+	  </div>
     </div>
   </div>
-  <div class="footer" style="">
+  <div class="footer" style="display:none">
     <div>
       Code: #code#
     </div>
     <div>
       Redeem by: #expiry#
     </div>
+  </div>
+  <div>
     <div class="#mode#">
-      <a href="#url#" target="_blank">PRINT COUPON</a>
+      <a href="#url#" target="_blank">VIEW IN PDF</a>
     </div>
   </div>
 </body>
