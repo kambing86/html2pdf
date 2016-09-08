@@ -1,43 +1,42 @@
 "use strict";
-const pdf = require('html-pdf');
-const express = require('express');
-const compression = require('compression');
-const bodyParser = require('body-parser');
-const fs = require('fs');
+const pdf = require("html-pdf");
+const express = require("express");
+const compression = require("compression");
+const bodyParser = require("body-parser");
+const fs = require("fs");
 // const xz = require('xz');
-const moment = require('moment');
+const moment = require("moment");
 
 const app = express();
 
-// app.use('/static', express.static('static'));
-app.use('/pdf', express.static('bak'));
+app.use("/pdf", express.static("bak"));
 
-app.engine('html', (filePath, options, callback) => { // define the template engine
+app.engine("html", (filePath, options, callback) => { // define the template engine
   fs.readFile(filePath, (err, content) => {
     if (err) return callback(new Error(err));
     var rendered = content.toString();
     for (var i in options.replace) {
-      rendered = rendered.replace(new RegExp('#' + i + '#', 'g'), options.replace[i]);
+      rendered = rendered.replace(new RegExp("#" + i + "#", "g"), options.replace[i]);
     }
     return callback(null, rendered);
   });
 });
-app.set('views', './views'); // specify the views directory
-app.set('view engine', 'html'); // register the template engine
+app.set("views", "./views"); // specify the views directory
+app.set("view engine", "html"); // register the template engine
 
 const paperFormat = {
   "format": "A4",
   "orientation": "portrait"
 };
-const backupPath = __dirname + '/bak';
+const backupPath = __dirname + "/bak";
 
 (function() {
   if (!fs.existsSync(backupPath))
     fs.mkdirSync(backupPath);
-  var path = backupPath + '/prod';
+  var path = backupPath + "/prod";
   if (!fs.existsSync(path))
     fs.mkdirSync(path);
-  path = backupPath + '/dev';
+  path = backupPath + "/dev";
   if (!fs.existsSync(path))
     fs.mkdirSync(path);
 })();
@@ -48,16 +47,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(compression());
 
-app.post('/getCoupon', (req, res, next) => {
-  if (!!!req.body.uid) {
+app.post("/getCoupon", (req, res) => {
+  console.log(req.body);
+  if (!req.body.uid) {
     res.end("Please provide uid");
     return;
   }
-  if (!!!req.body.coupon) {
+  if (!req.body.coupon) {
     res.end("Please provide coupon");
     return;
   }
-  if (!!!req.body.env) {
+  if (!req.body.env) {
     res.end("Please provide environment");
     return;
   }
@@ -68,24 +68,24 @@ app.post('/getCoupon', (req, res, next) => {
     title: coupon.deal.name,
     imageUrl: coupon.deal.largeImage,
     message: coupon.deal.desc.replace(/\n/g, "<br/>"),
-    valStart: moment(coupon.deal.valStart).add(8,'hours').format("DD-MMM-YYYY"),
-    valEnd: moment(coupon.deal.valEnd).add(8,'hours').format("DD-MMM-YYYY"),
+    valStart: moment(coupon.deal.valStart).add(8, "hours").format("DD-MMM-YYYY"),
+    valEnd: moment(coupon.deal.valEnd).add(8, "hours").format("DD-MMM-YYYY"),
     message2: coupon.deal.termCond.replace(/\n/g, "<br/>"),
-    mode: 'printCoupon',
+    mode: "printCoupon",
     code: coupon.code,
     expiry: moment(coupon.expiry).format("YYYY-MM-DD HH:mm")
   };
-  app.render('coupon', {
+  app.render("coupon", {
     replace: obj
   }, (err, html) => {
     pdf.create(html, paperFormat).toStream(function(err, stream) {
-      var filename = backupPath + '/' + env + '/' + uid + '_' + moment().format("YYYYMMDDHHmmss") + '.pdf';
+      var filename = backupPath + "/" + env + "/" + uid + "_" + moment().format("YYYYMMDDHHmmss") + ".pdf";
       var fileStream = fs.createWriteStream(filename);
       stream.pipe(fileStream);
-      fileStream.on('finish', () => {
-        obj.mode = '';
-        obj.url = filename.replace(backupPath, '/pdf');
-        res.render('coupon', {
+      fileStream.on("finish", () => {
+        obj.mode = "";
+        obj.url = filename.replace(backupPath, "/pdf");
+        res.render("coupon", {
           replace: obj
         });
       });
